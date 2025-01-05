@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Voyage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Modifier le Voyage</h1>
+        <form action="/voyages/edit/{id}" method="post" th:object="${voyage}">
+            <div class="mb-3">
+                <label for="destination" class="form-label">Destination</label>
+                <input type="text" id="destination" name="destination" class="form-control" th:field="*{destination}">
+                <div class="text-danger" th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="dateDebut" class="form-label">Date de début</label>
+                <input type="date" id="dateDebut" name="dateDebut" class="form-control" th:field="*{dateDebut}">
+                <div class="text-danger" th:if="${#fields.hasErrors('dateDebut')}" th:errors="*{dateDebut}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="dateFin" class="form-label">Date de fin</label>
+                <input type="date" id="dateFin" name="dateFin" class="form-control" th:field="*{dateFin}">
+                <div class="text-danger" th:if="${#fields.hasErrors('dateFin')}" th:errors="*{dateFin}"></div>
+            </div>
+            <div class="mb-3">
+                <label for="prix" class="form-label">Prix</label>
+                <input type="number" id="prix" name="prix" class="form-control" th:field="*{prix}">
+                <div class="text-danger" th:if="${#fields.hasErrors('prix')}" th:errors="*{prix}"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            <a href="/voyages" class="btn btn-secondary">Retour à la liste</a>
+        </form>
+    </div>
+</body>
+</html>

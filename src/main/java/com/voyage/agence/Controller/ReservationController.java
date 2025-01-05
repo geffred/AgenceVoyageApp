@@ -2,9 +2,13 @@ package com.voyage.agence.Controller;
 
 import com.voyage.agence.Entity.Reservation;
 import com.voyage.agence.Repository.ReservationRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,17 +24,20 @@ public class ReservationController {
     public String listReservations(Model model) {
         List<Reservation> reservations = reservationRepository.findAll();
         model.addAttribute("reservations", reservations);
-        return "reservation/list";
+        return "Reservation/list";
     }
 
     @GetMapping("/add")
     public String showAddReservationForm(Model model) {
         model.addAttribute("reservation", new Reservation());
-        return "reservation/add";
+        return "Reservation/add";
     }
 
     @PostMapping("/add")
-    public String addReservation(@ModelAttribute Reservation reservation) {
+    public String addReservation(@ModelAttribute @Valid Reservation reservation, Errors errors) {
+        if (errors.hasErrors()) {
+            return "Reservation/add";
+        }
         reservationRepository.save(reservation);
         return "redirect:/reservations";
     }
@@ -40,11 +47,17 @@ public class ReservationController {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid reservation ID:" + id));
         model.addAttribute("reservation", reservation);
-        return "reservation/edit";
+        return "Reservation/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String editReservation(@PathVariable Long id, @ModelAttribute Reservation reservation) {
+    public String editReservation(@PathVariable Long id, @ModelAttribute @Valid Reservation reservation,
+            Errors errors) {
+
+        if (errors.hasErrors()) {
+
+            return "Reservation/edit";
+        }
         reservation.setId(id);
         reservationRepository.save(reservation);
         return "redirect:/reservations";
@@ -65,6 +78,6 @@ public class ReservationController {
             reservations = reservationRepository.findAll();
         }
         model.addAttribute("reservations", reservations);
-        return "reservation/list";
+        return "Reservation/list";
     }
 }
