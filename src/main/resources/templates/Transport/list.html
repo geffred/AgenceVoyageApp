@@ -4,14 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Transports</title>
+    <link rel="stylesheet" href="/style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
+     <header>
+        <ul>
+            <li><a href="/" class="active" >Home</a></li>
+            <li style="float:right" ><a href="/reservations">Réservations</a></li>
+            <li style="float:right"><a href="/voyages">Voyages</a></li>
+            <li style="float:right" ><a href="/transports">Transports</a></li>
+            <li style="float:right" ><a href="/clients">Clients</a></li>
+        </ul>
+    </header>
+    <main>
+        <div class="container mt-5">
         <h1>Liste des Transports</h1>
         <a href="/transports/add" class="btn btn-primary mb-3">Ajouter un Transport</a>
         
-        <table class="table table-striped">
+        <table class="table ">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -30,13 +41,17 @@
                     <td th:text="${transport.heureDepart}"></td>
                     <td th:text="${transport.heureArrivee}"></td>
                     <td>
-                        <a th:href="@{/transports/edit/{id}(id=${transport.id})}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a th:href="@{/transports/edit/{id}(id=${transport.id})}" class="btn btn-primary btn-sm">Modifier</a>
                         <a th:href="@{/transports/delete/{id}(id=${transport.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce transport ?');">Supprimer</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <footer>
+        <p> &copy 2025 Agence de Voyage. Tous droits réservés.</p>
+    </footer>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

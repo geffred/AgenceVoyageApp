@@ -1,16 +1,23 @@
 package com.voyage.agence.Entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,6 +49,14 @@ public class Voyage {
     @NotNull(message = "Le prix est obligatoire.")
     @Positive(message = "Le prix doit être un nombre positif.")
     private double prix;
+
+    @OneToMany(mappedBy = "voyage", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @NotNull(message = "Champs ne doit pas être null")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "transport_id")
+    private Transport transport;
 
     public Voyage() {
     }
@@ -94,5 +109,21 @@ public class Voyage {
 
     public void setPrix(double prix) {
         this.prix = prix;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public Transport getTransport() {
+        return transport;
+    }
+
+    public void setTransport(Transport transport) {
+        this.transport = transport;
     }
 }

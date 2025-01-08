@@ -1,6 +1,7 @@
 package com.voyage.agence.Controller;
 
 import com.voyage.agence.Entity.Voyage;
+import com.voyage.agence.Repository.TransportRepository;
 import com.voyage.agence.Repository.VoyageRepository;
 
 import jakarta.validation.Valid;
@@ -20,6 +21,9 @@ public class VoyageController {
     @Autowired
     private VoyageRepository voyageRepository;
 
+    @Autowired
+    private TransportRepository transportRepository;
+
     @GetMapping
     public String listVoyages(Model model) {
         List<Voyage> voyages = voyageRepository.findAll();
@@ -30,12 +34,14 @@ public class VoyageController {
     @GetMapping("/add")
     public String showAddVoyageForm(Model model) {
         model.addAttribute("voyage", new Voyage());
+        model.addAttribute("transports", transportRepository.findAll());
         return "Voyage/add";
     }
 
     @PostMapping("/add")
-    public String addVoyage(@ModelAttribute @Valid Voyage voyage, Errors errors) {
+    public String addVoyage(@ModelAttribute @Valid Voyage voyage, Errors errors, Model model) {
         if (errors.hasErrors()) {
+            model.addAttribute("transports", transportRepository.findAll());
             return "Voyage/add";
         }
         voyageRepository.save(voyage);
@@ -47,6 +53,7 @@ public class VoyageController {
         Voyage voyage = voyageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid voyage ID:" + id));
         model.addAttribute("voyage", voyage);
+        model.addAttribute("transports", transportRepository.findAll());
         return "Voyage/edit";
     }
 
@@ -71,10 +78,10 @@ public class VoyageController {
             @RequestParam(required = false) Double maxPrix, Model model) {
         List<Voyage> voyages = voyageRepository.findAll();
         if (destination != null && !destination.isEmpty()) {
-            voyages = voyages.stream().filter(v -> v.getDestination().equalsIgnoreCase(destination)).toList();
+            voyages = voyageRepository.findByDestinationContaining(destination);
         }
         if (maxPrix != null) {
-            voyages = voyages.stream().filter(v -> v.getPrix() <= maxPrix).toList();
+            voyages = voyageRepository.findByPrix(maxPrix);
         }
         model.addAttribute("voyages", voyages);
         return "Voyage/list";

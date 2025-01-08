@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Client</title>
+    <link rel="stylesheet" href="/style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container mt-5">
+    <header>
+        <ul>
+            <li><a href="/" class="active" >Home</a></li>
+            <li style="float:right" ><a href="/reservations">Réservations</a></li>
+            <li style="float:right"><a href="/voyages">Voyages</a></li>
+            <li style="float:right" ><a href="/transports">Transports</a></li>
+            <li style="float:right" ><a href="/clients">Clients</a></li>
+        </ul>
+    </header>
+    <main>
+        <div class="container mt-5">
         <h1>Ajouter un Client</h1>
         <form th:action="@{/clients/add}" th:object="${client}" method="post">
             <div class="mb-3">
@@ -35,9 +46,13 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Ajouter</button>
-            <a href="/clients" class="btn btn-secondary">Retour</a>
+            <a href="/clients" class="btn btn-dark">Retour</a>
         </form>
     </div>
+    <footer>
+        <p> &copy 2025 Agence de Voyage. Tous droits réservés.</p>
+    </footer>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

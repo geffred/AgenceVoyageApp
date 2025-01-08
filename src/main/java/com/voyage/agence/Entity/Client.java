@@ -1,10 +1,17 @@
 package com.voyage.agence.Entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -40,6 +47,10 @@ public class Client {
     @NotNull(message = "Ce champs ne doit pas être null ")
     @Pattern(regexp = "^(\\+32|0)[1-9](\\d{1,2})?[ ]?\\d{3}[ ]?\\d{3}$", message = "Veuillez entrer un numéro de téléphone belge valide")
     private String telephone;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", updatable = false)
+    private List<Reservation> reservationList;
 
     public Client() {
     }
@@ -93,4 +104,13 @@ public class Client {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.voyage.agence.Controller;
 
 import com.voyage.agence.Entity.Reservation;
+import com.voyage.agence.Repository.ClientRepository;
 import com.voyage.agence.Repository.ReservationRepository;
+import com.voyage.agence.Repository.VoyageRepository;
 
 import jakarta.validation.Valid;
 
@@ -20,6 +22,12 @@ public class ReservationController {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private VoyageRepository voyageRepository;
+
     @GetMapping
     public String listReservations(Model model) {
         List<Reservation> reservations = reservationRepository.findAll();
@@ -30,6 +38,8 @@ public class ReservationController {
     @GetMapping("/add")
     public String showAddReservationForm(Model model) {
         model.addAttribute("reservation", new Reservation());
+        model.addAttribute("clients", clientRepository.findAll());
+        model.addAttribute("voyages", voyageRepository.findAll());
         return "Reservation/add";
     }
 
