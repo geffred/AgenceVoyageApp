@@ -26,7 +26,7 @@ public class Reservation {
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "voyage_id", nullable = false)
+    @JoinColumn(name = "voyage_id", nullable = false, updatable = false)
     private Voyage voyage;
 
     public Reservation() {
@@ -70,4 +70,5 @@ public class Reservation {
     public void setVoyage(Voyage voyage) {
         this.voyage = voyage;
     }
+
 }

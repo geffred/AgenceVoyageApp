@@ -55,7 +55,7 @@ public class Voyage {
 
     @NotNull(message = "Champs ne doit pas être null")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transport_id")
+    @JoinColumn(name = "transport_id", updatable = false, nullable = false)
     private Transport transport;
 
     public Voyage() {

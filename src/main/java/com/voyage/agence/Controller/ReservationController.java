@@ -14,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/reservations")
@@ -28,10 +29,14 @@ public class ReservationController {
     @Autowired
     private VoyageRepository voyageRepository;
 
+    private String message = "";
+
     @GetMapping
     public String listReservations(Model model) {
         List<Reservation> reservations = reservationRepository.findAll();
         model.addAttribute("reservations", reservations);
+        model.addAttribute("message", message);
+        message = "";
         return "Reservation/list";
     }
 
@@ -44,10 +49,22 @@ public class ReservationController {
     }
 
     @PostMapping("/add")
-    public String addReservation(@ModelAttribute @Valid Reservation reservation, Errors errors) {
+    public String addReservation(@ModelAttribute @Valid Reservation reservation, Errors errors, Model model) {
+        // Vérification des erreurs de validation
         if (errors.hasErrors()) {
             return "Reservation/add";
         }
+
+        // Vérification si une réservation existe déjà pour ce client et ce voyage
+        Optional<Reservation> optReservation = reservationRepository.findByClientIdAndVoyageId(
+                reservation.getClient().getId(),
+                reservation.getVoyage().getId());
+        if (optReservation.isPresent()) {
+            message = "Le client a déjà effectué cette réservation.";
+            return "redirect:/reservations";
+        }
+
+        // Enregistrement de la réservation
         reservationRepository.save(reservation);
         return "redirect:/reservations";
     }
@@ -57,6 +74,8 @@ public class ReservationController {
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid reservation ID:" + id));
         model.addAttribute("reservation", reservation);
+        model.addAttribute("clients", clientRepository.findAll());
+        model.addAttribute("voyages", voyageRepository.findAll());
         return "Reservation/edit";
     }
 
@@ -69,6 +88,16 @@ public class ReservationController {
             return "Reservation/edit";
         }
         reservation.setId(id);
+
+        // Vérification si une réservation existe déjà pour ce client et ce voyage
+        Optional<Reservation> optReservation = reservationRepository.findByClientIdAndVoyageId(
+                reservation.getClient().getId(),
+                reservation.getVoyage().getId());
+        if (optReservation.isPresent()) {
+            message = "Le client a déjà effectué cette réservation.";
+            return "redirect:/reservations";
+        }
+
         reservationRepository.save(reservation);
         return "redirect:/reservations";
     }
@@ -80,14 +109,29 @@ public class ReservationController {
     }
 
     @GetMapping("/filter")
-    public String filterReservations(@RequestParam(required = false) Boolean paye, Model model) {
+    public String filterReservations(
+            @RequestParam(required = false) Boolean paye,
+            @RequestParam(name = "nom", required = false) String nom,
+            Model model) {
+
         List<Reservation> reservations;
-        if (paye != null) {
-            reservations = reservationRepository.findAll().stream().filter(r -> r.isPaye() == paye).toList();
+
+        if (paye != null && nom != null) {
+            // Filtrer par "paye" et "nom" combinés
+            reservations = reservationRepository.findByPayeAndClientNomContaining(paye, nom);
+        } else if (paye != null) {
+            // Filtrer uniquement par "paye"
+            reservations = reservationRepository.findByPaye(paye);
+        } else if (nom != null) {
+            // Filtrer uniquement par "nom"
+            reservations = reservationRepository.findByClientNomContaining(nom);
         } else {
+            // Pas de filtres, récupérer toutes les réservations
             reservations = reservationRepository.findAll();
         }
+
         model.addAttribute("reservations", reservations);
         return "Reservation/list";
     }
+
 }

@@ -53,6 +53,7 @@
                 <button type="submit" class="btn btn-primary">Ajouter</button>
                 <a href="/reservations" class="btn btn-dark">Retour</a>
             </div>
+            <div th:if="${message} !=''" th:text="${message}"></div>
         </form>
     </div>
     

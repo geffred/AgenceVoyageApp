@@ -36,19 +36,19 @@ public class Client {
     @NotNull(message = "Ce champs ne doit pas être null ")
     private String prenom;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @NotEmpty(message = "Ce champs ne doit pas être vide ")
     @NotNull(message = "Ce champs ne doit pas être null ")
     @Email(message = "veillez entrer une adresse email valide ")
     private String email;
 
-    @Column(name = "telephone")
+    @Column(name = "telephone", unique = true)
     @NotEmpty(message = "Ce champs ne doit pas être vide ")
     @NotNull(message = "Ce champs ne doit pas être null ")
     @Pattern(regexp = "^(\\+32|0)[1-9](\\d{1,2})?[ ]?\\d{3}[ ]?\\d{3}$", message = "Veuillez entrer un numéro de téléphone belge valide")
     private String telephone;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", updatable = false)
     private List<Reservation> reservationList;
 

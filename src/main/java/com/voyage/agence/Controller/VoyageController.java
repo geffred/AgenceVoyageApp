@@ -13,6 +13,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/voyages")
@@ -24,10 +25,14 @@ public class VoyageController {
     @Autowired
     private TransportRepository transportRepository;
 
+    private String message = "";
+
     @GetMapping
     public String listVoyages(Model model) {
         List<Voyage> voyages = voyageRepository.findAll();
         model.addAttribute("voyages", voyages);
+        model.addAttribute("message", message);
+        message = "";
         return "Voyage/list";
     }
 
@@ -40,9 +45,18 @@ public class VoyageController {
 
     @PostMapping("/add")
     public String addVoyage(@ModelAttribute @Valid Voyage voyage, Errors errors, Model model) {
+        Optional<Voyage> voyageOptional = voyageRepository.findByTransportId(voyage.getTransport().getId());
         if (errors.hasErrors()) {
             model.addAttribute("transports", transportRepository.findAll());
             return "Voyage/add";
+        }
+        if (voyage.getDateFin().isBefore(voyage.getDateDebut())) {
+            message = "La date de fin doit être  après la date de debut!";
+            return "redirect:/voyages";
+        }
+        if (voyageOptional.isPresent()) {
+            message = "Ce Transport est de déjà associé à un voyage , veillez sélectionner ou créer un nouveau transport pour ce voyage!";
+            return "redirect:/voyages";
         }
         voyageRepository.save(voyage);
         return "redirect:/voyages";
@@ -63,6 +77,10 @@ public class VoyageController {
             return "Voyage/edit";
         }
         voyage.setId(id);
+        if (voyage.getDateFin().isBefore(voyage.getDateDebut())) {
+            message = "La date de fin doit être  après la date de debut!";
+            return "redirect:/voyages";
+        }
         voyageRepository.save(voyage);
         return "redirect:/voyages";
     }

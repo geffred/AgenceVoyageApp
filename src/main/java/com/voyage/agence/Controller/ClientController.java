@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/clients")
@@ -20,10 +21,14 @@ public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
 
+    private String message = "";
+
     @GetMapping
     public String listClients(Model model) {
         List<Client> clients = clientRepository.findAll();
         model.addAttribute("clients", clients);
+        model.addAttribute("message", message);
+        message = "";
         return "Client/list";
     }
 
@@ -38,7 +43,11 @@ public class ClientController {
         if (errors.hasErrors()) {
             return "Client/add";
         }
-        clientRepository.save(client);
+        try {
+            clientRepository.save(client);
+        } catch (Exception e) {
+            message = "l'email ou le numéro de téléhphone est déjà utilisé";
+        }
         return "redirect:/clients";
     }
 
@@ -56,13 +65,23 @@ public class ClientController {
             return "Client/edit";
         }
         client.setId(id);
-        clientRepository.save(client);
+        try {
+            clientRepository.save(client);
+        } catch (Exception e) {
+            message = "L'email ou le numéro de téléphone est déjà utilisé";
+        }
         return "redirect:/clients";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteClient(@PathVariable Long id) {
-        clientRepository.deleteById(id);
+
+        try {
+            clientRepository.deleteById(id);
+        } catch (Exception e) {
+            message = "Erreur lors de la suppression du client!";
+        }
+
         return "redirect:/clients";
     }
 }

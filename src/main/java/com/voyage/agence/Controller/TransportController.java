@@ -20,10 +20,14 @@ public class TransportController {
     @Autowired
     private TransportRepository transportRepository;
 
+    private String message = "";
+
     @GetMapping
     public String listTransports(Model model) {
         List<Transport> transports = transportRepository.findAll();
         model.addAttribute("transports", transports);
+        model.addAttribute("message", message);
+        message = "";
         return "Transport/list";
     }
 
@@ -37,6 +41,10 @@ public class TransportController {
     public String addTransport(@ModelAttribute @Valid Transport transport, Errors errors) {
         if (errors.hasErrors()) {
             return "Transport/add";
+        }
+        if (transport.getHeureDepart().isAfter(transport.getHeureArrivee())) {
+            message = "L'heure d'arrivée doit être  après l'heure  de depart !";
+            return "redirect:/transports";
         }
         transportRepository.save(transport);
         return "redirect:/transports";
@@ -56,6 +64,10 @@ public class TransportController {
             return "Transport/edit";
         }
         transport.setId(id);
+        if (transport.getHeureDepart().isAfter(transport.getHeureArrivee())) {
+            message = "L'heure d'arrivée doit être  après l'heure de depart !";
+            return "redirect:/transports";
+        }
         transportRepository.save(transport);
         return "redirect:/transports";
     }
