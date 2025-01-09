@@ -92,3 +92,25 @@ main footer{
 main footer p{
     margin: 0;
     padding: none;}
+
+.card{
+    transition:  all .08s ease !important;
+    border-color: #007bff !important;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+.about{
+    font-size: 1.1em;
+    text-align: justify;
+}
+
+.selection{
+    font-size: 1.1em;
+}
+
+.welcome{
+    color: #007bff;
+}
