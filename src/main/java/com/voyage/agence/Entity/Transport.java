@@ -9,11 +9,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Table(name = "transports")
 @Entity
@@ -39,6 +44,18 @@ public class Transport {
     @NotNull(message = "L'heure d'arrivée est obligatoire.")
     private LocalTime heureArrivee;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @FutureOrPresent(message = "La date de départ doit être dans le futur ou aujourd'hui.")
+    @Column(name = "date_depart")
+    @NotNull(message = "La date de départ est obligatoire.")
+    private LocalDate dateDepart;
+
+    @FutureOrPresent(message = "La date d'arrivée doit être dans le futur ou aujourd'hui.")
+    @Column(name = "date_arrivee")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "La date d'arrivée est obligatoire.")
+    private LocalDate dateArrivee;
+
     @OneToMany(mappedBy = "transport", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Voyage> voyages = new ArrayList<>();
 
@@ -46,12 +63,15 @@ public class Transport {
     }
 
     public Transport(Long id,
-            TypeTransport typeTransport, String compagnie, LocalTime heureDepart, LocalTime heureArrivee) {
+            TypeTransport typeTransport, String compagnie, LocalTime heureDepart, LocalTime heureArrivee,
+            LocalDate dateDepart, LocalDate dateArrivee) {
         this.id = id;
         this.typeTransport = typeTransport;
         this.compagnie = compagnie;
         this.heureDepart = heureDepart;
         this.heureArrivee = heureArrivee;
+        this.dateDepart = dateDepart;
+        this.dateArrivee = dateArrivee;
     }
 
     // Getters and Setters
@@ -102,5 +122,21 @@ public class Transport {
 
     public void setVoyages(List<Voyage> voyages) {
         this.voyages = voyages;
+    }
+
+    public LocalDate getDateArrivee() {
+        return dateArrivee;
+    }
+
+    public void setDateArrivee(LocalDate dateArrivee) {
+        this.dateArrivee = dateArrivee;
+    }
+
+    public LocalDate getDateDepart() {
+        return dateDepart;
+    }
+
+    public void setDateDepart(LocalDate dateDepart) {
+        this.dateDepart = dateDepart;
     }
 }

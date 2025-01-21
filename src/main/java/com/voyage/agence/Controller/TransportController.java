@@ -42,6 +42,11 @@ public class TransportController {
         if (errors.hasErrors()) {
             return "Transport/add";
         }
+        if (transport.getDateArrivee().isBefore(transport.getDateDepart())) {
+            message = "La date d'arrivée doit être  après la date  de depart !";
+            return "redirect:/transports";
+
+        }
         if (transport.getHeureDepart().isAfter(transport.getHeureArrivee())) {
             message = "L'heure d'arrivée doit être  après l'heure  de depart !";
             return "redirect:/transports";

@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -36,7 +37,7 @@ public class Voyage {
     @Column(name = "date_debut")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "La date de début est obligatoire.")
-    @Future(message = "La date de début doit être dans le futur.")
+    @FutureOrPresent(message = "La date de début doit être dans le futur.")
     private LocalDate dateDebut;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

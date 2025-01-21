@@ -42,6 +42,16 @@
                 <input type="text" id="compagnie" th:field="*{compagnie}" class="form-control">
                 <div th:if="${#fields.hasErrors('compagnie')}" th:errors="*{compagnie}" class="text-danger"></div>
             </div>
+                        <div class="mb-3">
+                <label for="dateDepart" class="form-label">Date de Départ</label>
+                <input type="date" id="dateDepart" th:field="*{dateDepart}" class="form-control">
+                <div th:if="${#fields.hasErrors('dateDepart')}" th:errors="*{dateDepart}" class="text-danger"></div>
+            </div>
+             <div class="mb-3">
+                <label for="dateArrivee" class="form-label">Date de Arrivée</label>
+                <input type="date" id="dateArrivee" th:field="*{dateArrivee}" class="form-control">
+                <div th:if="${#fields.hasErrors('dateArrivee')}" th:errors="*{dateArrivee}" class="text-danger"></div>
+            </div>
             <div class="mb-3">
                 <label for="heureDepart" class="form-label">Heure de Départ</label>
                 <input type="time" id="heureDepart" th:field="*{heureDepart}" class="form-control">

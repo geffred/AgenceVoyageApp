@@ -5,6 +5,7 @@ import com.voyage.agence.Repository.ClientRepository;
 import com.voyage.agence.Repository.ReservationRepository;
 import com.voyage.agence.Repository.VoyageRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,26 +81,27 @@ public class ReservationController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editReservation(@PathVariable Long id, @ModelAttribute @Valid Reservation reservation,
+    public String editReservation(@PathVariable Long id, @ModelAttribute @Valid Reservation updatedReservation,
             Errors errors) {
 
         if (errors.hasErrors()) {
-
-            return "Reservation/edit";
-        }
-        reservation.setId(id);
-
-        // Vérification si une réservation existe déjà pour ce client et ce voyage
-        Optional<Reservation> optReservation = reservationRepository.findByClientIdAndVoyageId(
-                reservation.getClient().getId(),
-                reservation.getVoyage().getId());
-        if (optReservation.isPresent()) {
-            message = "Le client a déjà effectué cette réservation.";
-            return "redirect:/reservations";
+            return "Reservation/edit"; // Afficher le formulaire avec les erreurs
         }
 
-        reservationRepository.save(reservation);
-        return "redirect:/reservations";
+        // Charger l'entité existante depuis la base de données
+        Reservation existingReservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+
+        // Appliquer les modifications à l'entité existante
+        existingReservation.setPaye(updatedReservation.isPaye());
+        existingReservation.setClient(updatedReservation.getClient());
+        existingReservation.setVoyage(updatedReservation.getVoyage());
+        // Appliquer d'autres modifications nécessaires
+
+        // Sauvegarder l'entité mise à jour
+        reservationRepository.save(existingReservation);
+
+        return "redirect:/reservations"; // Redirection après la mise à jour
     }
 
     @GetMapping("/delete/{id}")

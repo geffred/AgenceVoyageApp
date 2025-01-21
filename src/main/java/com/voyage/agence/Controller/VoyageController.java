@@ -58,6 +58,12 @@ public class VoyageController {
             message = "Ce Transport est de déjà associé à un voyage , veillez sélectionner ou créer un nouveau transport pour ce voyage!";
             return "redirect:/voyages";
         }
+        if (!voyage.getTransport().getDateDepart().isEqual(voyage.getDateDebut())
+                || !voyage.getTransport().getDateArrivee().isEqual(voyage.getDateFin())) {
+            message = "Les dates de départ et d'arrivée du voyage doivent correspondre à celles du transport.";
+            return "redirect:/voyages";
+
+        }
         voyageRepository.save(voyage);
         return "redirect:/voyages";
     }

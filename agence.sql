@@ -81,6 +81,8 @@ INSERT INTO `reservations` (`paye`, `client_id`, `id`, `voyage_id`) VALUES
 --
 
 CREATE TABLE `transports` (
+  `date_arrivee` date NOT NULL,
+  `date_depart` date NOT NULL,
   `heure_arrivee` time(6) NOT NULL,
   `heure_depart` time(6) NOT NULL,
   `type_transport` tinyint(4) NOT NULL,
@@ -88,21 +90,23 @@ CREATE TABLE `transports` (
   `compagnie` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+-- --------------------------------------------------------
+
 --
 -- Déchargement des données de la table `transports`
 --
 
-INSERT INTO `transports` (`heure_arrivee`, `heure_depart`, `type_transport`, `id`, `compagnie`) VALUES
-('22:40:00.000000', '16:43:00.000000', 0, 1, 'SkyBelgium Airlines'),
-('10:30:00.000000', '07:00:00.000000', 0, 2, 'Royal AeroLines'),
-('15:45:00.000000', '09:15:00.000000', 3, 3, 'SNCB'),
-('16:10:00.000000', '07:00:00.000000', 2, 4, 'Flex Bus'),
-('20:10:00.000000', '10:20:00.000000', 1, 5, 'bla bla car'),
-('23:00:00.000000', '05:00:00.000000', 4, 6, '237 Bateau'),
-('16:50:00.000000', '12:30:00.000000', 0, 7, 'Altitude Express'),
-('20:00:00.000000', '14:50:00.000000', 3, 8, 'SNCF');
+INSERT INTO `transports` (`date_arrivee`, `date_depart`, `heure_arrivee`, `heure_depart`, `type_transport`, `id`, `compagnie`) VALUES
+('2025-01-11', '2025-01-10', '22:40:00.000000', '16:43:00.000000', 0, 1, 'SkyBelgium Airlines'),
+('2025-01-11', '2025-01-10', '10:30:00.000000', '07:00:00.000000', 0, 2, 'Royal AeroLines'),
+('2025-01-16', '2025-01-15', '15:45:00.000000', '09:15:00.000000', 3, 3, 'SNCB'),
+('2025-01-11', '2025-01-10', '16:10:00.000000', '07:00:00.000000', 2, 4, 'Flex Bus'),
+('2025-01-11', '2025-01-10', '20:10:00.000000', '10:20:00.000000', 1, 5, 'bla bla car'),
+('2025-01-25', '2025-01-21', '23:00:00.000000', '05:00:00.000000', 4, 6, '237 Bateau'),
+('2025-01-22', '2025-01-21', '16:50:00.000000', '12:30:00.000000', 0, 7, 'Altitude Express'),
+('2025-01-22', '2025-01-21', '20:00:00.000000', '14:50:00.000000', 3, 8, 'SNCF');
 
--- --------------------------------------------------------
+--
 
 --
 -- Structure de la table `voyages`

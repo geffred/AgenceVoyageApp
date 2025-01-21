@@ -31,6 +31,12 @@
                     <option th:each="transport : ${transports}" th:value="${transport.id}">
                         <span th:text="${transport.typeTransport}"></span>  
                         (<span th:text="${transport.compagnie}"></span>)
+                        <span>[Depart]---></span>
+                        <span th:text="${transport.dateDepart}"></span>
+                        à <span th:text="${transport.heureDepart}"></span>
+                        <span>[Arrivée]---></span>
+                         <span th:text="${transport.dateArrivee}"></span>
+                        à <span th:text="${transport.heureArrivee}"></span>
                     </option>
                 </select>
                 <div th:if="${#fields.hasErrors('transport')}" th:errors="*{transport}" class="text-danger"></div>
