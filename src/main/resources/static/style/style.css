@@ -71,6 +71,7 @@ header nav ul{
     list-style: none;
     padding: 0;
     gap: 10px;
+    flex-direction: row-reverse;
  
 }
 
