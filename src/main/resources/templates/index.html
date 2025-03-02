@@ -6,123 +6,119 @@
     <title>Page d'Accueil - Agence de Voyage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style/style.css">
-    <style>
-        .section-link {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-        }
-        .card-body .btn{
-            padding: 15px;
-            font-family: calibri;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .card{
-        height: 100%;
-    }
-    </style>
+    <link rel="icon" href="/img/logo.svg" type="image/svg">
+   
 </head>
 <body>
 
+    <div class="hello-customer py-3">
+        <div class="container ">
+            <h5 class="mt-1">Hey!</h5>
+            <p>Nous vous souhaitons la bienvenue sur notre plateforme dédiée à la gestion des voyages.</p>
+        </div>
+    </div>
     <header>
-        <ul>
-            <li><a href="/" class="active" >Home</a></li>
-            <li style="float:right" ><a href="/reservations">Réservations</a></li>
-            <li style="float:right"><a href="/voyages">Voyages</a></li>
-            <li style="float:right" ><a href="/transports">Transports</a></li>
-            <li style="float:right" ><a href="/clients">Clients</a></li>
-        </ul>
-    </header>
-   <main>
-     <div class="container">
-        <h1 class="text-center welcome">Bienvenue sur l'Agence de Voyage</h1>
-         <div class="container my-5 about">
-         <div class="row d-flex align-items-center">
-        <div class="col-lg-8">
-            Bienvenue sur notre plateforme de <em><b>gestion d'agence de voyage</b></em>
-            Notre site est conçu pour simplifier et optimiser la gestion des activités d'une agence de voyage.
-            Il vous permet de gérer efficacement les informations essentielles liées à vos clients, 
-            aux voyages proposés, aux réservations effectuées, ainsi qu'aux moyens de transport associés.
+        <img src="https://images.unsplash.com/photo-1488085061387-422e29b40080?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D" alt="" class="banner-img">
+        <nav class="container">
+            <a href="/">
+                <img src="/img/logo.svg" alt="" class="img-fluid" width="80">
+            </a>
+            <ul>
+                <li><a href="/reservations">Réservations</a></li>
+                <li><a href="/voyages">Voyages</a></li>
+                <li><a href="/transports">Transports</a></li>
+                <li><a href="/clients">Clients</a></li>
+            </ul>
+        </nav>
+        <section class="banner">
+            <div>
+                <h3>Organisez vos voyages en quelques clics</h3>
+                <p>Notre plateforme vous permet de gérer efficacement les informations essentielles liées à
+                    vos clients, aux voyages proposés, aux réservations effectuées, ainsi qu'aux moyens de transport associés.</p>
 
-             Le système repose sur quatre entités principales :
+            </div>
+        </section>
 
-            <em><b>Clients : Suivi des informations personnelles de vos clients.</b></em>
-           <em><b> Voyages : Gestion des détails des voyages, incluant les destinations, les prix et autres caractéristiques.</b></em>
-           <em><b> Réservations : Association des clients aux voyages, avec un suivi du statut des paiements.</b></em>
-           <em><b> Transports : Organisation des moyens de transport liés à chaque voyage.</b></em>
-            Grâce à des règles strictes de gestion et à des contraintes d'unicité, notre plateforme garantit la cohérence des données, élimine les doublons et offre un système fiable, structuré et facile à utiliser.
-
-            Explorez dès maintenant notre solution pour une gestion fluide et performante de votre agence de voyage !
-        </div>
-        <div class="col-lg-4 d-flex justify-content-center">
-            <img src="/img/plane.png" alt="" class="img-fluid" width="300">
-        </div>
-    </div>
-    </div>
-
-        <p class="text-center selection">Sélectionnez une des sections ci-dessous pour gérer les voyages, les transports, les réservations et les clients.</p>
-
-        <div class="row">
+        <section class="container-fluid section-menu mt-5">
+            <div class="row">
 
             <!-- Client Section -->
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="/img/client.jpg" class="card-img-top" alt="Clients">
-                    <div class="card-body">
-                        <h5 class="card-title">Clients</h5>
-                        <p class="card-text">Gérer et consulter les informations des clients enregistrés.</p>
-                        <a href="/clients" class="btn btn-primary section-link">Voir les Clients</a>
-                    </div>
+            <div class="col-lg-3 item-section">
+                <div>
+                    <img src="/img/person-team-svgrepo-com.svg" width="50" alt="Clients">
+                    <h5 >Clients</h5>
+                    <p>Gérer et consulter les informations des clients enregistrés.</p>
+                    <a href="/clients">Voir les Clients</a>
                 </div>
             </div>
 
              <!-- Transport Section -->
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="/img/transport.jpg" class="card-img-top" alt="Transports">
-                    <div class="card-body">
-                        <h5 class="card-title">Transports</h5>
-                        <p class="card-text">Gérer et consulter les moyens de transport disponibles pour les voyages.</p>
-                        <a href="/transports" class="btn btn-primary section-link">Voir les Transports</a>
-                    </div>
+            <div class="col-lg-3 item-section">
+                <div >
+                    <img src="/img/maximum-speed-svgrepo-com.svg" width="50" alt="Transports">
+                    <h5>Transports</h5>
+                    <p>Gérer et consulter les moyens de transport disponibles pour les voyages.</p>
+                    <a href="/transports">Voir les Transports</a>
                 </div>
             </div>
 
             <!-- Voyage Section -->
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="/img/voyage.jpg" class="card-img-top" alt="Voyages">
-                    <div class="card-body">
-                        <h5 class="card-title">Voyages</h5>
-                        <p class="card-text">Gérer et consulter les voyages proposés par l'agence.</p>
-                        <a href="/voyages" class="btn btn-primary section-link">Voir les Voyages</a>
-                    </div>
+            <div class="col-lg-3 item-section">
+                <div>
+                    <img src="/img/travel-svgrepo-com.svg"  width="50" alt="Voyages">
+                    <h5>Voyages</h5>
+                    <p >Gérer et consulter les voyages proposés par l'agence.</p>
+                    <a href="/voyages">Voir les Voyages</a>
                 </div>
             </div>
 
            
-
             <!-- Reservation Section -->
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="/img/reservation.jpg" class="card-img-top" alt="Réservations">
-                    <div class="card-body">
-                        <h5 class="card-title">Réservations</h5>
-                        <p class="card-text">Gérer et consulter les réservations effectuées par les clients.</p>
-                        <a href="/reservations" class="btn btn-primary section-link">Voir les Réservations</a>
-                    </div>
+            <div class="col-lg-3 item-section" >
+                <div>
+                    <img src="/img/seal-frame-1-svgrepo-com.svg" width="40" alt="Réservations">
+                    <h5>Réservations</h5>
+                    <p >Gérer et consulter les réservations effectuées par les clients.</p>
+                    <a href="/reservations">Voir les Réservations</a>
                 </div>
             </div>
 
             
         </div>
+        </section>
+    </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <main class="home">
+
+         <div class="container my-5 about">
+         <div class="row d-flex align-items-center">
+        <div class="col-lg-7">
+            <p>
+                Bienvenue sur notre plateforme de gestion d'agence de voyage
+            Notre site est conçu pour simplifier et optimiser la gestion des activités d'une agence de voyage.
+            Il vous permet de gérer efficacement les informations essentielles liées à vos clients, 
+            aux voyages proposés, aux réservations effectuées, ainsi qu'aux moyens de transport associés. <br>
+            <a href="/reservations" >Commencer</a>
+            </p>
+            
+        </div>
+        <div class="col-lg-5 d-flex justify-content-start plane">
+            <img src="/img/plane.png" alt="" class="img-fluid" width="300">
+        </div>
+    </div>
     </div>
    
     <footer class="py-3">
